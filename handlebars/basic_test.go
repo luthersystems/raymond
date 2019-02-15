@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/aymerick/raymond"
+	"bitbucket.org/luthersystems/raymond"
 )
 
 //

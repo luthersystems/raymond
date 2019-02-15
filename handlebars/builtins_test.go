@@ -152,8 +152,7 @@ var builtinsTests = []Test{
 		"{{#each .}}{{.}}{{/each}}",
 		map[string]interface{}{"goodbyes": "cruel", "world": "world"},
 		nil, nil, nil,
-		// note: a go hash is not ordered, so result may vary, this behaviour differs from the JS implementation
-		[]string{"cruelworld", "worldcruel"},
+		"cruelworld",
 	},
 	{
 		"#each - each without context",
@@ -166,9 +165,9 @@ var builtinsTests = []Test{
 	{
 		"#each - each with an object and @key (map)",
 		"{{#each goodbyes}}{{@key}}. {{text}}! {{/each}}cruel {{world}}!",
-		map[string]interface{}{"goodbyes": map[interface{}]map[string]string{"<b>#1</b>": {"text": "goodbye"}, 2: {"text": "GOODBYE"}}, "world": "world"},
+		map[string]interface{}{"goodbyes": map[interface{}]map[string]string{"<b>#1</b>": {"text": "goodbye"}, "2": {"text": "GOODBYE"}}, "world": "world"},
 		nil, nil, nil,
-		[]string{"&lt;b&gt;#1&lt;/b&gt;. goodbye! 2. GOODBYE! cruel world!", "2. GOODBYE! &lt;b&gt;#1&lt;/b&gt;. goodbye! cruel world!"},
+		"2. GOODBYE! &lt;b&gt;#1&lt;/b&gt;. goodbye! cruel world!",
 	},
 	// NOTE: An additional test with a struct, but without an html stuff for the key, because it is impossible
 	{
@@ -182,7 +181,28 @@ var builtinsTests = []Test{
 			"world": "world",
 		},
 		nil, nil, nil,
-		[]string{"Foo. baz! Bar. 10! cruel world!", "Bar. 10! Foo. baz! cruel world!"},
+		"Foo. baz! Bar. 10! cruel world!",
+	},
+	// simpler test with object fields
+	{
+		"#each - each with an object and @key (struct)",
+		"{{#each goodbyes}}{{@key}}.{{/each}}end!",
+		map[string]interface{}{
+			"goodbyes": struct {
+				Foo string
+				Bar string
+				Baz string
+				Car string
+				Cad string
+				Cur string
+				Dud string
+				Diz string
+				Dew string
+				Der string
+			}{"foo", "bar", "baz", "car", "cad", "cur", "dud", "diz", "dew", "der"},
+		},
+		nil, nil, nil,
+		"Foo.Bar.Baz.Car.Cad.Cur.Dud.Diz.Dew.Der.end!",
 	},
 	{
 		"#each - each with @index",
@@ -211,7 +231,7 @@ var builtinsTests = []Test{
 		"{{#each goodbyes}}{{@index}}. {{text}}! {{/each}}cruel {{world}}!",
 		map[string]interface{}{"goodbyes": map[string]map[string]string{"a": {"text": "goodbye"}, "b": {"text": "Goodbye"}}, "world": "world"},
 		nil, nil, nil,
-		[]string{"0. goodbye! 1. Goodbye! cruel world!", "0. Goodbye! 1. goodbye! cruel world!"},
+		"0. goodbye! 1. Goodbye! cruel world!",
 	},
 	{
 		"#each - each with nested @first",
@@ -235,13 +255,12 @@ var builtinsTests = []Test{
 		nil, nil, nil,
 		"GOODBYE! cruel world!",
 	},
-	// @note: That test differs from JS impl because maps and structs are not ordered in go
 	{
 		"#each - each object with @last",
 		"{{#each goodbyes}}{{#if @last}}{{text}}! {{/if}}{{/each}}cruel {{world}}!",
 		map[string]interface{}{"goodbyes": map[string]map[string]string{"foo": {"text": "goodbye"}, "bar": {"text": "Goodbye"}}, "world": "world"},
 		nil, nil, nil,
-		[]string{"goodbye! cruel world!", "Goodbye! cruel world!"},
+		"goodbye! cruel world!",
 	},
 	{
 		"#each - each with nested @last",

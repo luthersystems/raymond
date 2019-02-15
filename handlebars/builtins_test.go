@@ -204,6 +204,16 @@ var builtinsTests = []Test{
 		nil, nil, nil,
 		"Foo.Bar.Baz.Car.Cad.Cur.Dud.Diz.Dew.Der.end!",
 	},
+	// test dumping a map
+	{
+		"dumping a map",
+		"{{themap}}",
+		map[string]interface{}{
+			"themap": map[string]string{"a": "1", "b": "2", "c": "3", "d": "4"},
+		},
+		nil, nil, nil,
+		"UNPRINTABLE",
+	},
 	{
 		"#each - each with @index",
 		"{{#each goodbyes}}{{@index}}. {{text}}! {{/each}}cruel {{world}}!",

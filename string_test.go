@@ -42,7 +42,7 @@ func ExampleStr() {
 	fmt.Println(output)
 	// Output: 3 foos are true and -1.25 bars are false
 	// But you know '' John Snow
-	// map: map[foo:bar]
+	// map: UNPRINTABLE
 	// array: true10foo5bar
 }
 

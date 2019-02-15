@@ -52,7 +52,14 @@ func strValue(value reflect.Value) string {
 	case reflect.Invalid:
 		result = ""
 	default:
-		result = fmt.Sprintf("%s", ival)
+		switch v := ival.(type) {
+		case string:
+			result = v
+		case SafeString:
+			result = string(v)
+		default:
+			result = "UNPRINTABLE"
+		}
 	}
 
 	return result

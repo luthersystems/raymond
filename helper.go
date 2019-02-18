@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"reflect"
+	"sort"
 	"sync"
 )
 
@@ -339,11 +340,18 @@ func eachHelper(context interface{}, options *Options) interface{} {
 			result += options.evalBlock(val.Index(i).Interface(), data, i)
 		}
 	case reflect.Map:
-		// note: a go hash is not ordered, so result may vary, this behaviour differs from the JS implementation
 		keys := val.MapKeys()
-		for i := 0; i < len(keys); i++ {
-			key := keys[i].Interface()
-			ctx := val.MapIndex(keys[i]).Interface()
+		keystrs := make([]string, 0, len(keys))
+		for _, key := range keys {
+			keystr, ok := key.Interface().(string)
+			if ok {
+				keystrs = append(keystrs, keystr)
+			}
+		}
+		sort.Strings(keystrs)
+		for i := 0; i < len(keystrs); i++ {
+			key := keystrs[i]
+			ctx := val.MapIndex(reflect.ValueOf(keystrs[i])).Interface()
 
 			// computes private data
 			data := options.newIterDataFrame(len(keys), i, key)

@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/aymerick/raymond/ast"
+	"bitbucket.org/luthersystems/raymond/ast"
 )
 
 var (

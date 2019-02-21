@@ -30,8 +30,8 @@ func init() {
 	RegisterHelper("unless", unlessHelper)
 	RegisterHelper("with", withHelper)
 	RegisterHelper("each", eachHelper)
-	RegisterHelper("log", logHelper)
-	RegisterHelper("lookup", lookupHelper)
+	//RegisterHelper("log", logHelper)
+	//RegisterHelper("lookup", lookupHelper)
 	RegisterHelper("equal", equalHelper)
 }
 

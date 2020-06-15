@@ -588,22 +588,22 @@ func (v *evalVisitor) callFunc(name string, funcVal reflect.Value, options *Opti
 	boolType := reflect.TypeOf(true)
 
 	// check parameters number
-	addOptions := false
 	numIn := funcType.NumIn()
+	addOptions := false
 
-	if numIn == len(params)+1 {
-		lastArgType := funcType.In(numIn - 1)
-		if reflect.TypeOf(options).AssignableTo(lastArgType) {
+	if numIn > 0 {
+		if funcType.In(numIn-1) == reflect.TypeOf(&Options{}) {
+			numIn--
 			addOptions = true
 		}
 	}
 
-	if !addOptions && (len(params) != numIn) {
+	if len(params) != numIn {
 		v.errorf("Helper '%s' called with wrong number of arguments, needed %d but got %d", name, numIn, len(params))
 	}
 
 	// check and collect arguments
-	args := make([]reflect.Value, numIn)
+	args := make([]reflect.Value, numIn, (numIn + 1))
 	for i, param := range params {
 		arg := reflect.ValueOf(param)
 		argType := funcType.In(i)
@@ -636,7 +636,7 @@ func (v *evalVisitor) callFunc(name string, funcVal reflect.Value, options *Opti
 	}
 
 	if addOptions {
-		args[numIn-1] = reflect.ValueOf(options)
+		args = append(args, reflect.ValueOf(options))
 	}
 
 	result := funcVal.Call(args)

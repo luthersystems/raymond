@@ -96,7 +96,7 @@ func findHelper(name string) reflect.Value {
 	return helpers[name]
 }
 
-// newOptions instanciates a new Options
+// newOptions instantiates a new Options
 func newOptions(eval *evalVisitor, params []interface{}, hash map[string]interface{}) *Options {
 	return &Options{
 		eval:   eval,

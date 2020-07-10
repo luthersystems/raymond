@@ -3,7 +3,7 @@ package parser
 import (
 	"regexp"
 
-	"bitbucket.org/luthersystems/raymond/ast"
+	"github.com/luthersystems/raymond/ast"
 )
 
 // whitespaceVisitor walks through the AST to perform whitespace control

@@ -1,4 +1,4 @@
-module bitbucket.org/luthersystems/raymond
+module github.com/luthersystems/raymond
 
 go 1.14
 

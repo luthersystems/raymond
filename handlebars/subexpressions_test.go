@@ -3,7 +3,7 @@ package handlebars
 import (
 	"testing"
 
-	"bitbucket.org/luthersystems/raymond"
+	"github.com/luthersystems/raymond"
 )
 
 //

@@ -7,8 +7,8 @@ import (
 	"runtime"
 	"strconv"
 
-	"bitbucket.org/luthersystems/raymond/ast"
-	"bitbucket.org/luthersystems/raymond/lexer"
+	"github.com/luthersystems/raymond/ast"
+	"github.com/luthersystems/raymond/lexer"
 )
 
 // References:
